@@ -1,65 +1,113 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+
+// Dynamic imports to avoid SSR issues with Three.js and browser APIs
+const LoadingScreen = dynamic(() => import("@/components/LoadingScreen"), { ssr: false });
+const MusicPlayer = dynamic(() => import("@/components/MusicPlayer"), { ssr: false });
+const HeroSection = dynamic(() => import("@/components/HeroSection"), { ssr: false });
+const LoveCounter = dynamic(() => import("@/components/LoveCounter"), { ssr: false });
+const Timeline = dynamic(() => import("@/components/Timeline"), { ssr: false });
+const PhotoGallery = dynamic(() => import("@/components/PhotoGallery"), { ssr: false });
+const MemoryMovie = dynamic(() => import("@/components/MemoryMovie"), { ssr: false });
+const HeartUniverse = dynamic(() => import("@/components/HeartUniverse"), { ssr: false });
+const LoveLetter = dynamic(() => import("@/components/LoveLetter"), { ssr: false });
+const VideoMemories = dynamic(() => import("@/components/VideoMemories"), { ssr: false });
+const SpecialSurprise = dynamic(() => import("@/components/SpecialSurprise"), { ssr: false });
+const FinalEnding = dynamic(() => import("@/components/FinalEnding"), { ssr: false });
 
 export default function Home() {
+  const [loaded, setLoaded] = useState(false);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="relative bg-[#0a0a1a] min-h-screen">
+      {!loaded && <LoadingScreen onComplete={() => setLoaded(true)} />}
+
+      {loaded && (
+        <>
+          <MusicPlayer />
+          <HeroSection />
+          <LoveCounter />
+          <Timeline />
+          <MemoryMovie />
+          <PhotoGallery />
+          <HeartUniverse />
+          <LoveLetter />
+          <VideoMemories />
+          <SpecialSurprise />
+          <FinalEnding />
+
+          {/* Navigation dots */}
+          <NavDots />
+        </>
+      )}
+    </main>
+  );
+}
+
+function NavDots() {
+  const sections = [
+    { id: "hero", label: "Home" },
+    { id: "counter", label: "Numbers" },
+    { id: "timeline", label: "Story" },
+    { id: "memories", label: "Memories" },
+    { id: "gallery", label: "Gallery" },
+    { id: "heart-universe", label: "Heart" },
+    { id: "letter", label: "Letter" },
+    { id: "videos", label: "Videos" },
+    { id: "surprise", label: "Surprise" },
+    { id: "ending", label: "Forever" },
+  ];
+
+  const [active, setActive] = useState("hero");
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    sections.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3">
+      {sections.map(({ id, label }) => (
+        <button
+          key={id}
+          onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
+          className="group flex items-center gap-2 justify-end"
+          title={label}
+        >
+          <span
+            className="text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
+            style={{ color: active === id ? "#d4a843" : "rgba(255,255,255,0.4)" }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            {label}
+          </span>
+          <div
+            className="rounded-full transition-all duration-300"
+            style={{
+              width: active === id ? "10px" : "6px",
+              height: active === id ? "10px" : "6px",
+              background:
+                active === id
+                  ? "linear-gradient(135deg, #d4a843, #ff6b9d)"
+                  : "rgba(255,255,255,0.25)",
+              boxShadow: active === id ? "0 0 10px rgba(212,168,67,0.6)" : "none",
+            }}
+          />
+        </button>
+      ))}
     </div>
   );
 }
