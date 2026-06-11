@@ -72,7 +72,7 @@ const memories = [
   },
   {
     caption: "The love that never faded...",
-    sub: "Eight months and still burning bright",
+    sub: "Seven months and still burning bright",
     photo: "/photos/photo-52.jpg",
     video: "/videos/video3.mp4",   // ← ganti nama video sesuai file kamu
     objectPosition: "center center",

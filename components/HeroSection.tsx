@@ -162,7 +162,7 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
         >
-          Happy 8th Month
+          Happy 7th Month
           <br />
           Anniversary ❤️
         </motion.h1>

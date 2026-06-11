@@ -46,9 +46,9 @@ const months = [
     color: "#a8e6cf", icon: "🌠",
   },
   {
-    label: "Month 8", date: "Jun 2025", title: "Eight Months of Magic",
-    description: "Eight months of waking up grateful. Eight months of choosing you, and knowing you chose me. Here's to forever.",
-    milestone: "8th Anniversary ❤️", photos: ["/photos/photo-48.jpg", "/photos/photo-50.jpg", "/photos/photo-54.jpg"],
+    label: "Month 7", date: "Jun 2025", title: "Seven Months of Magic",
+    description: "Seven months of waking up grateful. Seven months of choosing you, and knowing you chose me. Here's to forever.",
+    milestone: "7th Anniversary ❤️", photos: ["/photos/photo-48.jpg", "/photos/photo-50.jpg", "/photos/photo-54.jpg"],
     color: "#ff6b9d", icon: "❤️",
   },
 ];
@@ -192,7 +192,7 @@ export default function Timeline() {
               background: "linear-gradient(135deg, #d4a843, #ff6b9d)",
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
             }}>
-            8 Months of Magic
+            7 Months of Magic
           </h2>
           <p className="text-white/45 text-sm">Click each month to see our memories</p>
         </motion.div>

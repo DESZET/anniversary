@@ -5,7 +5,7 @@ import { motion, useInView } from "framer-motion";
 const LETTER_PARAGRAPHS = [
   "My Dearest Love,",
   "",
-  "Eight months ago, the universe decided to weave our stories together — and every single day since, I have fallen more deeply in love with you than I thought humanly possible.",
+  "Seven months ago, the universe decided to weave our stories together — and every single day since, I have fallen more deeply in love with you than I thought humanly possible.",
   "",
   "You are the first thought in my morning and the last smile before I sleep. You are the reason ordinary moments feel extraordinary. The way you laugh, the way you care, the way you look at the world — I never want to stop watching you discover it.",
   "",
@@ -13,7 +13,7 @@ const LETTER_PARAGRAPHS = [
   "",
   "I think about the thousand small moments that don't make it into photos: the inside jokes that only we understand, the way we finish each other's thoughts, the silent understanding that passes between us in a crowded room. Those are the moments I treasure most.",
   "",
-  "Eight months is just the beginning. I am so incredibly grateful for every single chapter of our story, and I cannot wait to write the ones yet to come — with you, always with you.",
+  "Seven months is just the beginning. I am so incredibly grateful for every single chapter of our story, and I cannot wait to write the ones yet to come — with you, always with you.",
   "",
   "Thank you for choosing me, every single day.",
   "",

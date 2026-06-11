@@ -68,7 +68,7 @@ export default function EnterOverlay({ show, onEnter }: Props) {
               filter: "drop-shadow(0 0 20px rgba(212,168,67,0.4))",
             }}
           >
-            Happy 8th Month Anniversary
+            Happy 7th Month Anniversary
           </motion.h1>
 
           <motion.p
