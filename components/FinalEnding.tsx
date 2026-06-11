@@ -177,7 +177,7 @@ export default function FinalEnding() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1.2, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          Thank You For 8
+          Thank You For 7
           <br />
           Beautiful Months ❤️
         </motion.h1>

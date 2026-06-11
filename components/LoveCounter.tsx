@@ -3,7 +3,7 @@ import { useRef, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
 import CountUp from "react-countup";
 
-const START_DATE = new Date("2024-11-12");
+const START_DATE = new Date("2025-10-12");
 
 function getDiff() {
   const now = new Date();
@@ -65,7 +65,7 @@ export default function LoveCounter() {
             background: "linear-gradient(135deg, #d4a843, #ff6b9d)",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
           }}>
-            8 Months of Moments
+            7 Months of Moments
           </h2>
         </motion.div>
 

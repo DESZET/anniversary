@@ -39,14 +39,9 @@ const months = [
     milestone: "Half Year Together", photos: ["/photos/photo-33.jpg", "/photos/photo-34.jpg", "/photos/photo-35.jpg"],
     color: "#ff8c42", icon: "🌅",
   },
+
   {
-    label: "Month 7", date: "May 2025", title: "Dreams Come True",
-    description: "The month our dreams started becoming reality. Every goal feels achievable when you're my partner.",
-    milestone: "Making Memories", photos: ["/photos/photo-40.jpg", "/photos/photo-41.jpg", "/photos/photo-42.jpg"],
-    color: "#a8e6cf", icon: "🌠",
-  },
-  {
-    label: "Month 7", date: "Jun 2025", title: "Seven Months of Magic",
+    label: "Month 7", date: "May 2025", title: "Seven Months of Magic",
     description: "Seven months of waking up grateful. Seven months of choosing you, and knowing you chose me. Here's to forever.",
     milestone: "7th Anniversary ❤️", photos: ["/photos/photo-48.jpg", "/photos/photo-50.jpg", "/photos/photo-54.jpg"],
     color: "#ff6b9d", icon: "❤️",
