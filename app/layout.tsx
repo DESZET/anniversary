@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Happy 8th Anniversary ❤️",
-  description: "Eight beautiful years. One incredible journey. A lifetime still ahead.",
+  title: "Happy 8th Month Anniversary ❤️",
+  description: "Eight beautiful months. One incredible journey. A lifetime still ahead.",
   openGraph: {
-    title: "Happy 8th Anniversary ❤️",
-    description: "Eight beautiful years. One incredible journey. A lifetime still ahead.",
+    title: "Happy 8th Month Anniversary ❤️",
+    description: "Eight beautiful months. One incredible journey. A lifetime still ahead.",
   },
 };
 

@@ -66,7 +66,7 @@ export default function HeroSection() {
     hidden: { opacity: 0, y: 60, filter: "blur(10px)" },
     visible: (i: number) => ({
       opacity: 1, y: 0, filter: "blur(0px)",
-      transition: { delay: i * 0.25, duration: 1, ease: [0.25, 0.46, 0.45, 0.94] },
+      transition: { delay: i * 0.25, duration: 1, ease: "easeOut" as const },
     }),
   };
 
@@ -80,7 +80,7 @@ export default function HeroSection() {
       <motion.div className="absolute inset-0" style={{ scale, y }}>
         {/* Hero photo — uses photo-1 as the main cinematic backdrop */}
         <img
-          src="/photos/photo-25.jpg"
+          src="/photos/photo-4.jpg"
           alt="Our love story"
           className="w-full h-full object-cover object-center"
           style={{ filter: "brightness(0.55) saturate(1.1)" }}
@@ -162,7 +162,7 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
         >
-          Happy 8th
+          Happy 8th Month
           <br />
           Anniversary ❤️
         </motion.h1>
@@ -189,7 +189,7 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
         >
-          Eight beautiful years.
+          Eight beautiful months.
           <br />
           <span style={{ color: "#ff6b9d" }}>One incredible journey.</span>
           <br />

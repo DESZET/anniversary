@@ -7,10 +7,10 @@ interface Props {
 }
 
 const PHRASES = [
-  "8 Years...",
+  "8 Months...",
   "Countless Memories...",
   "Endless Love...",
-  "Happy 8th Anniversary ❤️",
+  "Happy 8th Month Anniversary ❤️",
 ];
 
 export default function LoadingScreen({ onComplete }: Props) {
@@ -225,7 +225,7 @@ export default function LoadingScreen({ onComplete }: Props) {
                         filter: "drop-shadow(0 0 20px rgba(212,168,67,0.6))",
                       }}
                     >
-                      Happy 8th Anniversary ❤️
+                      Happy 8th Month Anniversary ❤️
                     </motion.p>
                     {done && (
                       <motion.div

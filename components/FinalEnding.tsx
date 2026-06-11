@@ -179,7 +179,7 @@ export default function FinalEnding() {
         >
           Thank You For 8
           <br />
-          Beautiful Years ❤️
+          Beautiful Months ❤️
         </motion.h1>
 
         <motion.div

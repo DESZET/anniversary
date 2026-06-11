@@ -171,61 +171,41 @@ export default function HeartUniverse() {
   }, []);
 
   return (
-    <section id="heart-universe" className="py-24 relative overflow-hidden">
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "radial-gradient(ellipse at center, rgba(25,5,30,0.8) 0%, rgba(10,10,26,0.95) 70%)",
-        }}
-      />
+    <section id="heart-universe" style={{ width: "100%", padding: "6rem 0", position: "relative", overflow: "hidden" }}>
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "radial-gradient(ellipse at center, rgba(25,5,30,0.8) 0%, rgba(10,10,26,0.95) 70%)",
+      }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <p className="text-sm tracking-[0.4em] uppercase mb-4" style={{ color: "#d4a843" }}>
+      <div style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: 1200, margin: "0 auto", padding: "0 1.5rem" }}>
+        <motion.div style={{ textAlign: "center", marginBottom: "3rem" }}
+          initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.8 }}>
+          <p style={{ fontSize: "0.75rem", letterSpacing: "0.4em", textTransform: "uppercase", marginBottom: "1rem", color: "#d4a843" }}>
             ✦ Heart Universe ✦
           </p>
-          <h2
-            className="text-4xl md:text-6xl font-bold"
-            style={{
-              fontFamily: "Georgia, serif",
-              background: "linear-gradient(135deg, #ff6b9d, #d4a843)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
+          <h2 style={{
+            fontFamily: "Georgia, serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700,
+            background: "linear-gradient(135deg, #ff6b9d, #d4a843)",
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+          }}>
             Our Love in 3D
           </h2>
-          <p className="text-white/40 mt-3">Move your cursor to explore</p>
+          <p style={{ color: "rgba(255,255,255,0.4)", marginTop: "0.75rem" }}>Move your cursor to explore</p>
         </motion.div>
 
-        {/* Three.js mount point */}
-        <div
-          ref={mountRef}
-          className="w-full rounded-3xl overflow-hidden"
-          style={{
-            height: "70vh",
-            minHeight: 400,
-            border: "1px solid rgba(255,107,157,0.15)",
-            background: "rgba(10,5,20,0.6)",
-            boxShadow: "0 0 80px rgba(255,107,157,0.1), 0 0 40px rgba(212,168,67,0.05) inset",
-          }}
-        />
+        {/* Three.js canvas */}
+        <div ref={mountRef} style={{
+          width: "100%", borderRadius: "1.5rem", overflow: "hidden",
+          height: "clamp(320px, 65vh, 650px)",
+          border: "1px solid rgba(255,107,157,0.15)",
+          background: "rgba(10,5,20,0.6)",
+          boxShadow: "0 0 80px rgba(255,107,157,0.1)",
+        }} />
 
-        <motion.p
-          className="text-center mt-8 text-white/40 text-sm italic"
-          style={{ fontFamily: "Georgia, serif" }}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-        >
+        <motion.p style={{ textAlign: "center", marginTop: "2rem", color: "rgba(255,255,255,0.4)", fontSize: "0.875rem", fontStyle: "italic", fontFamily: "Georgia, serif" }}
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+          viewport={{ once: true }} transition={{ delay: 0.5 }}>
           ❤️ A heart that beats only for you
         </motion.p>
       </div>

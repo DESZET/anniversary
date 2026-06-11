@@ -325,7 +325,7 @@ export default function SpecialSurprise() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.8, type: "spring" }}
                     >
-                      I love you today, tomorrow, and forever.
+                      I love you today, tomorrow, and for every month yet to come.
                     </motion.p>
 
                     <motion.button

@@ -20,11 +20,11 @@ export default function Home() {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <main className="relative bg-[#0a0a1a] min-h-screen">
+    <main style={{ width: "100%", minHeight: "100vh", background: "#0a0a1a", position: "relative" }}>
       {!loaded && <LoadingScreen onComplete={() => setLoaded(true)} />}
 
       {loaded && (
-        <>
+        <div style={{ width: "100%" }}>
           <MusicPlayer />
           <HeroSection />
           <LoveCounter />
@@ -36,10 +36,8 @@ export default function Home() {
           <VideoMemories />
           <SpecialSurprise />
           <FinalEnding />
-
-          {/* Navigation dots */}
           <NavDots />
-        </>
+        </div>
       )}
     </main>
   );
