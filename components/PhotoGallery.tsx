@@ -236,32 +236,26 @@ export default function PhotoGallery() {
               </div>
 
               {/* Label */}
-              <div className="text-center mt-6">
+              <div className="text-center mt-4">
                 <p className="text-xl font-light text-white/80" style={{ fontFamily: "Georgia, serif" }}>
                   {PHOTOS[selected].label}
                 </p>
-                <p className="text-sm text-white/30 mt-1">
-                  {selected + 1} / {PHOTOS.length}
-                </p>
               </div>
 
-              {/* Nav arrows */}
-              {selected > 0 && (
+              {/* Nav arrows — inside modal, not outside */}
+              <div className="flex justify-between items-center mt-4 px-2">
                 <button
-                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 w-12 h-12 rounded-full glass flex items-center justify-center text-white/60 hover:text-white transition-colors"
-                  onClick={(e) => { e.stopPropagation(); setSelected((s) => (s !== null ? s - 1 : s)); }}
-                >
-                  ←
-                </button>
-              )}
-              {selected < PHOTOS.length - 1 && (
+                  className="w-12 h-12 rounded-full glass flex items-center justify-center text-white/60 hover:text-white transition-colors disabled:opacity-20"
+                  disabled={selected === 0}
+                  onClick={(e) => { e.stopPropagation(); setSelected((s) => s !== null ? Math.max(s - 1, 0) : s); }}
+                >←</button>
+                <span className="text-white/40 text-sm">{selected + 1} / {PHOTOS.length}</span>
                 <button
-                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 w-12 h-12 rounded-full glass flex items-center justify-center text-white/60 hover:text-white transition-colors"
-                  onClick={(e) => { e.stopPropagation(); setSelected((s) => (s !== null ? s + 1 : s)); }}
-                >
-                  →
-                </button>
-              )}
+                  className="w-12 h-12 rounded-full glass flex items-center justify-center text-white/60 hover:text-white transition-colors disabled:opacity-20"
+                  disabled={selected === PHOTOS.length - 1}
+                  onClick={(e) => { e.stopPropagation(); setSelected((s) => s !== null ? Math.min(s + 1, PHOTOS.length - 1) : s); }}
+                >→</button>
+              </div>
 
               {/* Close */}
               <button

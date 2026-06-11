@@ -112,7 +112,8 @@ function MemorySlide({
     <div
       ref={ref}
       style={{
-        position: "relative", height: "100vh",
+        position: "relative", height: "100svh",
+        minHeight: "100vh",
         display: "flex", alignItems: "center", justifyContent: "center",
         overflow: "hidden",
       }}

@@ -99,12 +99,12 @@ export default function MusicPlayer({ externalAudio }: Props) {
 
   return (
     <motion.div
-      style={{ position: "fixed", bottom: 24, left: 24, zIndex: 50, display: "flex", alignItems: "center", gap: 12 }}
+      style={{ position: "fixed", bottom: 16, left: 16, zIndex: 50, display: "flex", alignItems: "center", gap: 8 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5 }}
     >
-      <div className="glass glow-gold" style={{ borderRadius: 16, padding: "10px 16px", display: "flex", alignItems: "center", gap: 12 }}>
+      <div className="glass glow-gold" style={{ borderRadius: 14, padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
 
         {/* Play / Pause */}
         <button onClick={togglePlay}

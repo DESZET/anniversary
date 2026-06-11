@@ -38,6 +38,16 @@ function VideoCard({ video, index }: { video: typeof videos[0]; index: number })
         setHovered(false);
         if (videoRef.current) { videoRef.current.pause(); videoRef.current.currentTime = 0; }
       }}
+      onTouchStart={() => {
+        const isPlaying = !videoRef.current?.paused;
+        if (isPlaying) {
+          videoRef.current?.pause();
+          setHovered(false);
+        } else {
+          videoRef.current?.play().catch(() => {});
+          setHovered(true);
+        }
+      }}
     >
       {/* Video element (muted preview) */}
       <video
@@ -46,6 +56,7 @@ function VideoCard({ video, index }: { video: typeof videos[0]; index: number })
         muted
         loop
         playsInline
+        preload="none"
         className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500"
       />
 

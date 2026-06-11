@@ -1,23 +1,33 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Particle {
-  id: number;
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  color: string;
-  size: number;
-  life: number;
+  id: number; x: number; y: number;
+  vx: number; vy: number; color: string; size: number; life: number;
 }
+interface Firework { id: number; x: string; y: string; color: string; }
 
-interface Firework {
-  id: number;
-  x: string;
-  y: string;
-  color: string;
+// Canvas-based particle renderer — zero React re-renders per frame
+function CanvasParticles({ particles, fireworks }: { particles: Particle[]; fireworks: Firework[] }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d")!;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      const x = (p.x / 100) * canvas.width;
+      const y = (p.y / 100) * canvas.height;
+      ctx.beginPath();
+      ctx.arc(x, y, p.size / 2, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + Math.floor(p.life * 255).toString(16).padStart(2, "0");
+      ctx.fill();
+    });
+  }, [particles]);
+  return <canvas ref={canvasRef} style={{ position: "fixed", inset: 0, zIndex: 40, pointerEvents: "none" }} />;
 }
 
 export default function SpecialSurprise() {
@@ -25,11 +35,21 @@ export default function SpecialSurprise() {
   const [showMessage, setShowMessage] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
   const [fireworks, setFireworks] = useState<Firework[]>([]);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const colors = ["#d4a843", "#ff6b9d", "#ffffff", "#ffb3cc", "#f0c96a", "#ff4466"];
+
+  // Deterministic stars — no Math.random in render
+  const stars = useMemo(() => Array.from({ length: 60 }, (_, i) => ({
+    id: i,
+    left: `${(i * 37 + 11) % 100}%`,
+    top: `${(i * 53 + 7) % 100}%`,
+    w: (i % 3) + 1,
+    color: i % 2 === 0 ? "#d4a843" : "#ff6b9d",
+    opacity: ((i * 0.15) % 0.5) + 0.1,
+    duration: `${2 + (i % 3)}s`,
+    delay: `${(i * 0.2) % 3}s`,
+  })), []);
 
   const triggerExplosion = () => {
     setOpened(true);
@@ -121,78 +141,17 @@ export default function SpecialSurprise() {
         }}
       />
 
-      {/* Stars */}
+      {/* Stars — deterministic */}
       <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 60 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full animate-twinkle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${Math.random() * 2 + 1}px`,
-              height: `${Math.random() * 2 + 1}px`,
-              background: Math.random() > 0.5 ? "#d4a843" : "#ff6b9d",
-              opacity: Math.random() * 0.5 + 0.1,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
-            }}
-          />
+        {stars.map((s) => (
+          <div key={s.id} className="absolute rounded-full animate-twinkle"
+            style={{ left: s.left, top: s.top, width: s.w, height: s.w, background: s.color, opacity: s.opacity, animationDelay: s.delay, animationDuration: s.duration }} />
         ))}
       </div>
 
-      {/* Canvas for particles */}
+      {/* Canvas for particles — pakai canvas bukan DOM supaya tidak freeze di HP */}
       {opened && particles.length > 0 && (
-        <div className="fixed inset-0 z-40 pointer-events-none overflow-hidden">
-          {particles.map((p) => (
-            <div
-              key={p.id}
-              className="absolute rounded-full"
-              style={{
-                left: `${p.x}%`,
-                top: `${p.y}%`,
-                width: p.size,
-                height: p.size,
-                background: p.color,
-                opacity: p.life,
-                transform: `translate(-50%, -50%)`,
-                boxShadow: `0 0 ${p.size * 2}px ${p.color}`,
-              }}
-            />
-          ))}
-
-          {/* Fireworks */}
-          {fireworks.map((fw) => (
-            <motion.div
-              key={fw.id}
-              className="absolute"
-              style={{ left: fw.x, top: fw.y }}
-              initial={{ scale: 0, opacity: 1 }}
-              animate={{ scale: [0, 1.5, 0], opacity: [1, 1, 0] }}
-              transition={{ duration: 1.5, delay: Math.random() * 0.8, ease: "easeOut" }}
-            >
-              {Array.from({ length: 16 }).map((_, j) => (
-                <motion.div
-                  key={j}
-                  className="absolute w-1 h-1 rounded-full"
-                  style={{
-                    background: fw.color,
-                    boxShadow: `0 0 6px ${fw.color}`,
-                    left: "50%",
-                    top: "50%",
-                  }}
-                  animate={{
-                    x: Math.cos((j / 16) * Math.PI * 2) * (40 + Math.random() * 30),
-                    y: Math.sin((j / 16) * Math.PI * 2) * (40 + Math.random() * 30),
-                    opacity: [1, 0],
-                    scale: [1, 0],
-                  }}
-                  transition={{ duration: 1.2, delay: Math.random() * 0.3, ease: "easeOut" }}
-                />
-              ))}
-            </motion.div>
-          ))}
-        </div>
+        <CanvasParticles particles={particles} fireworks={fireworks} />
       )}
 
       <div className="relative z-10 text-center max-w-3xl mx-auto">

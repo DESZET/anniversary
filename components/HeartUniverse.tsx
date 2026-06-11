@@ -17,9 +17,10 @@ export default function HeartUniverse() {
     const camera = new THREE.PerspectiveCamera(60, el.clientWidth / el.clientHeight, 0.1, 1000);
     camera.position.z = 5;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const isMobile = window.innerWidth < 768;
+    const renderer = new THREE.WebGLRenderer({ antialias: !isMobile, alpha: true });
     renderer.setSize(el.clientWidth, el.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
     renderer.setClearColor(0x000000, 0);
     el.appendChild(renderer.domElement);
     rendererRef.current = renderer;
@@ -68,8 +69,8 @@ export default function HeartUniverse() {
     pointLight2.position.set(-2, -1, 1);
     scene.add(pointLight2);
 
-    // Particle system — stars + hearts orbiting
-    const particleCount = 600;
+    // Particle system — reduce on mobile
+    const particleCount = isMobile ? 200 : 600;
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
     const sizes = new Float32Array(particleCount);
@@ -111,13 +112,19 @@ export default function HeartUniverse() {
     const ring = new THREE.Mesh(ringGeo, ringMat);
     scene.add(ring);
 
-    // Mouse tracking
+    // Mouse + touch tracking
     let mouseX = 0, mouseY = 0;
     const onMouseMove = (e: MouseEvent) => {
       mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
       mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
     };
+    const onTouchMove = (e: TouchEvent) => {
+      const t = e.touches[0];
+      mouseX = (t.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = -(t.clientY / window.innerHeight - 0.5) * 2;
+    };
     window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
 
     // Resize
     const onResize = () => {
@@ -164,7 +171,12 @@ export default function HeartUniverse() {
     return () => {
       cancelAnimationFrame(frameRef.current);
       window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("resize", onResize);
+      // Dispose all geometries and materials
+      heartGeo.dispose(); heartMat.dispose(); wireMat.dispose();
+      particleGeo.dispose(); particleMat.dispose();
+      ringGeo.dispose(); ringMat.dispose();
       renderer.dispose();
       if (el.contains(renderer.domElement)) el.removeChild(renderer.domElement);
     };

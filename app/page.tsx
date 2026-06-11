@@ -106,14 +106,19 @@ function NavDots() {
 
   return (
     <div style={{
-      position: "fixed", right: 24, top: "50%",
+      position: "fixed", right: 12, top: "50%",
       transform: "translateY(-50%)", zIndex: 40,
-      display: "flex", flexDirection: "column", gap: 12,
+      display: "flex", flexDirection: "column", gap: 8,
     }}>
       {sections.map(({ id, label }) => (
         <button key={id} title={label}
           onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
-          style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "flex-end", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+          style={{
+            display: "flex", alignItems: "center", justifyContent: "flex-end",
+            background: "none", border: "none", cursor: "pointer",
+            // 44x44 touch target minimum
+            width: 44, height: 44, padding: 0,
+          }}
         >
           <div style={{
             borderRadius: "50%", transition: "all 0.3s",
