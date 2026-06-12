@@ -155,7 +155,7 @@ function MemorySlide({
               ref={videoRef}
               src={memory.video}
               autoPlay
-              muted
+              muted          
               loop
               playsInline
               controls={false}

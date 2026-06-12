@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 
@@ -17,6 +17,23 @@ function VideoCard({ video, index }: { video: typeof videos[0]; index: number })
   const videoRef = useRef<HTMLVideoElement>(null);
   const inView = useInView(ref, { once: false, margin: "-100px" });
 
+  // Pastikan muted selalu true via property (iOS Safari fix)
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.muted = true;
+  }, []);
+
+  const playVideo = () => {
+    if (!videoRef.current) return;
+    videoRef.current.muted = true; // force muted sebelum play
+    videoRef.current.play().catch(() => {});
+  };
+
+  const pauseVideo = () => {
+    if (!videoRef.current) return;
+    videoRef.current.pause();
+    videoRef.current.currentTime = 0;
+  };
+
   return (
     <motion.div
       ref={ref}
@@ -30,23 +47,12 @@ function VideoCard({ video, index }: { video: typeof videos[0]; index: number })
       initial={{ opacity: 0, scale: 0.9, y: 40 }}
       animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      onMouseEnter={() => {
-        setHovered(true);
-        videoRef.current?.play().catch(() => {});
-      }}
-      onMouseLeave={() => {
-        setHovered(false);
-        if (videoRef.current) { videoRef.current.pause(); videoRef.current.currentTime = 0; }
-      }}
+      onMouseEnter={() => { setHovered(true); playVideo(); }}
+      onMouseLeave={() => { setHovered(false); pauseVideo(); }}
       onTouchStart={() => {
         const isPlaying = !videoRef.current?.paused;
-        if (isPlaying) {
-          videoRef.current?.pause();
-          setHovered(false);
-        } else {
-          videoRef.current?.play().catch(() => {});
-          setHovered(true);
-        }
+        if (isPlaying) { pauseVideo(); setHovered(false); }
+        else { playVideo(); setHovered(true); }
       }}
     >
       {/* Video element (muted preview) */}
