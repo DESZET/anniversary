@@ -189,7 +189,7 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
         >
-          Eight beautiful months.
+          Seven beautiful months.
           <br />
           <span style={{ color: "#ff6b9d" }}>One incredible journey.</span>
           <br />
