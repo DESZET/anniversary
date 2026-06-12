@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 // ─────────────────────────────────────────────
@@ -105,8 +105,24 @@ function MemorySlide({
   );
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
-  // Auto play/pause video saat masuk/keluar viewport
   const isVideo = !!memory.video;
+
+  // Auto play/pause video saat masuk/keluar viewport
+  useEffect(() => {
+    if (!isVideo || !videoRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          videoRef.current?.play().catch(() => {});
+        } else {
+          videoRef.current?.pause();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [isVideo]);
 
   return (
     <div
@@ -142,6 +158,8 @@ function MemorySlide({
               muted
               loop
               playsInline
+              controls={false}
+              preload="metadata"
               style={{
                 position: "relative",
                 width: "100%", height: "100%",
